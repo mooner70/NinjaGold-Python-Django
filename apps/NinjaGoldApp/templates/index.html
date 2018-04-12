@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold</title>
+</head>
+<body>
+<h1>Current wealth: {{request.session.gold}}</h1>
+    <form action="/process_money" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="building" value="farm1">
+        <p>Farm (earns 10-20 golds):</p>
+        <input type="submit" name="farm1">
+    </form>
+    <form action="/process_money" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="building" value="cave1">
+        <p>Cave (earns 5-10 golds):</p>
+        <input type="submit" name="cave1">
+    </form>
+    <form action="/process_money" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="building" value="house1">
+        <p>House (earns 2-5 golds):</p>
+        <input type="submit" name="house1">
+    </form>
+    <form action="/process_money" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="building" value="casino1">
+        <p>Casino (earns/takes 0-50 golds):</p>
+        <input type="submit" name="casino1">
+    </form>
+    
+    {% for logs in request.session.logs %}
+    <p>{{logs}}</p>
+    {% endfor %}
+</body>
+</html>
