@@ -20,27 +20,37 @@ def init(request):
 
 def index(request):
     init(request)
-    print "request.session", request.session['logs']
-    return render(request, "index.html")
+    context = {
+        "time": strftime("%I:%M %p", gmtime()), 
+    }
+    return render(request, "index.html", context)
 
 def process_money(request):
     if request.method == "POST":
         place = request.POST["building"]
     if place == "farm1":
         winnings = random.randrange(10,21)
+        a = "You earned {} gold from the farm!".format(winnings)
+        request.session["logs"].append(a)
     if place == "cave1":
         winnings = random.randrange(5,11)
+        a = "You earned {} gold from the cave!".format(winnings)
+        request.session["logs"].append(a)
     if place == "house1":
         winnings = random.randrange(2,6)
+        a = "You earned {} gold from the house!".format(winnings)
+        request.session["logs"].append(a)
     if place == "casino1":
         winnings = random.randrange(-50,50)
+        a = "You earned {} gold from the casino!".format(winnings)
+        request.session["logs"].append(a)
     request.session["gold"] += winnings
 
-    if winnings < 0:
-        request.session["logs"].append("You lost!")
-    else:
-        request.session["logs"].append("You WIN!")
-    print request.session["logs"]
+    # if winnings < 0:
+    #     request.session["logs"].append("You lost!")
+    # else:
+    #     request.session["logs"].append("You WIN!")
+    # print request.session["logs"]
 
     return redirect("/")
     
